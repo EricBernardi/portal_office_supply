@@ -1,8 +1,8 @@
 export interface Request {
   id: number;
-  requestorName: string;
-  itemDescription: string;
-  priceProduct: string;
+  requesterName: string;
+  description: string;
+  price: string;
   status?: string;
   observations?: string;
 }

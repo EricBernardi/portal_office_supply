@@ -3,6 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { RouterOutlet } from "@angular/router";
 import { RequestService } from "../services/request.service";
+import { firstValueFrom } from 'rxjs';
+import { ToastrNotificationService } from "../services/toastr.service";
 
 @Component({
   selector: 'app-query',
@@ -17,31 +19,44 @@ export class QueryComponent implements OnInit {
   filteredRequests: any[] = [];
   filterForm: FormGroup;
 
-  constructor(private requestService: RequestService, private formBuilder: FormBuilder){
+  constructor(private requestService: RequestService,
+    private formBuilder: FormBuilder,
+    private toastrNotification: ToastrNotificationService) {
     this.filterForm = formBuilder.group({
       status: [''],
-      requestorName: [''],
-      itemDescription: ['']
+      requesterName: [''],
+      description: ['']
     })
   }
 
-  ngOnInit(){
-    this.requestService.getRequests().subscribe(data => {
-      this.requests = data;
-      this.filteredRequests = data;
-    });
-
-    this.filterForm.valueChanges.subscribe(filters => {
-      this.applyFilters();
-    })
+  ngOnInit() {
+    this.loadRequests();
   }
 
-  applyFilters(){
-    const { status, requestorName, itemDescription } = this.filterForm.value;
+  async loadRequests() {
+    try {
+      const data = await firstValueFrom(this.requestService.getRequests());
+      this.requests = data.requests;
+      this.filteredRequests = data.requests;
+      this.filterForm.valueChanges.subscribe(filters => {
+        this.applyFilters();
+      })
+    } catch (error) {
+      this.toastrNotification.showSuccess('Ocorreu um erro interno', 'Erro')
+    }
+  }
+
+  applyFilters() {
+    const { status, requesterName, description } = this.filterForm.value;
     this.filteredRequests = this.requests.filter(request => {
       return (!status || request.status === status) &&
-             (!requestorName || request.requestorName.toLowerCase().includes(requestorName.toLowerCase())) &&
-             (!itemDescription || request.itemDescription.toLowerCase().includes(itemDescription.toLowerCase()));
+        (!requesterName || request.requesterName.toLowerCase().includes(requesterName.toLowerCase())) &&
+        (!description || request.description.toLowerCase().includes(description.toLowerCase()));
     })
+  }
+
+  setStatusRequest(status: number): string {
+    if (!status) return '';
+    return status == 0 ? 'Reprovado' : 'Aprovado';
   }
 }

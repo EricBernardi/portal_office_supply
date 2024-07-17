@@ -8,23 +8,19 @@ import { Observable } from "rxjs";
 })
 
 export class RequestService {
-  private apiUrl = 'http://localhost:3000/api/request';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient){}
 
   createRequest(request: Request): Observable<any> {
-    return this.http.post<any>(this.apiUrl, request);
+    return this.http.post<any>(`${this.apiUrl}/requester`, request);
   }
 
   getRequests(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(`${this.apiUrl}/admin`);
   }
 
-  getRequestById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
-  }
-
-  approvalRequest(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`)
+  approvalRequest(request: Request): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/approver`, request)
   }
 }
