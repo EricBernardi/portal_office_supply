@@ -1,27 +1,54 @@
-# BuyMaterial
+# Aplicação Buy Material
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.7.
+Este projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli) na versão 18.0.7.
 
-## Development server
+## Requisitos Funcionais
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Cenário 1: Solicitante de Compra
 
-## Code scaffolding
+Dado que sou um solicitante, preciso solicitar a compra de pilhas AAA. O sistema deve possibilitar registrar:
+- **Nome do Solicitante**
+- **Descrição do Item** (texto livre)
+- **Preço do Produto** (texto livre com máscara de "R$ XX,XX")
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Cenário 2: Almoxarife (Aprovador de Solicitações)
+
+Dado que sou Almoxarife, aprovador de solicitações de compra, preciso aprovar ou reprovar as solicitações. O sistema deve possibilitar que o aprovador:
+- Visualize uma tela idêntica à do solicitante, porém com campos preenchidos como readonly.
+- Selecione uma ação para a solicitação (Aprovar ou Reprovar) através de um campo select.
+- Preencha obrigatoriamente um campo de Observações, apenas se a solicitação for reprovada.
+
+### Cenário 3: Usuário Administrativo
+
+Dado que sou um usuário da área do setor administrativo, quero consultar os fluxos de solicitação de compra de material de escritório. O sistema deve:
+- Ter uma página para consulta de todos os dados das solicitações.
+- Permitir filtrar as solicitações por status do fluxo (Aprovados e Reprovados), nome do solicitante e descrição do item.
+
+## Tecnologias Utilizadas
+
+- Angular 18
+- Banco de dados: SqlServer
+- Linguagem de Back-end: Node.js
+
+### Passos para Configuração
+
+1. **Clone o repositório**
+
+    ```bash
+    git clone https://github.com/EricBernardi/portal_office_supply.git
+    cd portal_office_supply
+    ```
+
+2. **Instale as dependências**
+
+    ```bash
+    npm install
+    ```
+
+## Servidor de Desenvolvimento
+
+Execute `npm start` para iniciar o servidor de desenvolvimento. Navegue para `http://localhost:4200/`. O aplicativo será recarregado automaticamente se você modificar qualquer arquivo de origem.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Execute `npm run build` para realizar o build do projeto. Os artefatos de build serão armazenados no diretório `dist/`.

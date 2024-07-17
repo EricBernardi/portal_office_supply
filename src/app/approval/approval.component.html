@@ -1,41 +1,65 @@
 <div class="container mt-4">
   <h2>Lista de Solicitações</h2>
-  <div *ngIf="requests.length === 0" class="alert alert-info">
+  <div *ngIf="requests.length === 0; else hasRequests" class="alert alert-info">
     Não há solicitações para exibir.
   </div>
-  <div *ngFor="let request of requests" class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">{{ request.requestorName }}</h5>
-      <p class="card-text"><strong>Descrição do Item:</strong> {{ request.itemDescription }}</p>
-      <p class="card-text"><strong>Preço do Produto:</strong> {{ request.priceProduct }}</p>
-      <!-- Adicionar mais campos conforme necessário -->
-      <form [formGroup]="approvalForm" (ngSubmit)="sendRequest(request.id)" class="mt-4">
-        <div class="form-group">
-          <label for="requestorName">Nome do Solicitante</label>
-          <input id="requestorName" formControlName="requestorName" type="text" class="form-control" [value]="request.requestorName" readonly>
-        </div>
-        <div class="form-group">
-          <label for="itemDescription">Descrição do item</label>
-          <input id="itemDescription" formControlName="itemDescription" type="text" class="form-control" [value]="request.itemDescription" readonly>
-        </div>
-        <div class="form-group">
-          <label for="priceProduct">Preço do produto</label>
-          <input id="priceProduct" formControlName="priceProduct" type="text" class="form-control" [value]="request.priceProduct" readonly>
-        </div>
-        <div class="form-group">
-          <label for="status">Ação</label>
-          <select id="status" formControlName="status" class="form-control">
-            <option value="" disabled selected>Selecione a ação</option>
-            <option value="0">Reprovado</option>
-            <option value="1">Aprovado</option>
-          </select>
-        </div>
-        <div *ngIf="approvalForm.get('status')?.value && approvalForm.get('status')?.value == 0" class="form-group">
-          <label for="observations">Observações</label>
-          <input id="observations" formControlName="observations" type="text" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="approvalForm.invalid">Enviar retorno</button>
-      </form>
+  <ng-template #hasRequests>
+    <div>Selecione um item da lista para continuar</div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <form [formGroup]="approvalForm" (ngSubmit)="sendRequest()" class="mt-4">
+          <div class="form-group">
+            <label for="requesterName">Nome do Solicitante</label>
+            <input id="requesterName" formControlName="requesterName" type="text" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="description">Descrição do item</label>
+            <input id="description" formControlName="description" type="text" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="price">Preço do produto</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">R$</span>
+              </div>
+              <input id="price" formControlName="price" type="text" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status">Ação</label>
+            <select id="status" formControlName="status" class="form-control">
+              <option value="" disabled selected>Selecione a ação</option>
+              <option value="0">Reprovado</option>
+              <option value="1">Aprovado</option>
+            </select>
+          </div>
+          <div *ngIf="approvalForm.get('status')?.value && approvalForm.get('status')?.value == 0" class="form-group">
+            <label for="observations">Observações</label>
+            <input id="observations" formControlName="observations" type="text" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="approvalForm.invalid">Enviar retorno</button>
+        </form>
+      </div>
     </div>
-  </div>
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nome do Solicitante</th>
+          <th>Descrição do item</th>
+          <th>Preço</th>
+          <th>Status</th>
+          <th>Observação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of requests" (click)="fillForm(request)">
+          <td>{{ request.requesterName }}</td>
+          <td>{{ request.description }}</td>
+          <td>{{ 'R$ ' + request.price }}</td>
+          <td>{{ request.status }}</td>
+          <td>{{ request.observations ? request.observations : '' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
 </div>
