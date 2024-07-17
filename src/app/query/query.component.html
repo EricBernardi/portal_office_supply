@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h2>Fazer Consulta</h2>
+  <form [formGroup]="filterForm" class="mt-4">
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status" class="form-control">
+          <option value="0">Todos</option>
+          <option value="1">Reprovados</option>
+          <option value="2">Aprovados</option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="requestorName">Nome do Solicitante</label>
+        <input type="text" formControlName="requestorName" id="requestorName" class="form-control">
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="itemDescription">Descrição do item</label>
+        <input type="text" formControlName="itemDescription" id="itemDescription" class="form-control">
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>Nome do Solicitante</th>
+        <th>Descrição do item</th>
+        <th>Preço</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let request of filteredRequests">
+        <td>{{ request.requestorName }}</td>
+        <td>{{ request.itemDescription }}</td>
+        <td>{{ request.priceProduct }}</td>
+        <td>{{ request.status == 1 ? 'Aprovado' : 'Reprovado' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

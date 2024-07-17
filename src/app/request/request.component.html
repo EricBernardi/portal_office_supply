@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h2>Criar Solicitação</h2>
+<form [formGroup]="requestForm" (ngSubmit)="sendRequest()" class="mt-4">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="requestorName">Nome do Solicitante</label>
+      <input id="requestorName" formControlName="requestorName" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group col-md-4">
+    <label for="itemDescription">Descrição do item</label>
+    <input id="itemDescription" formControlName="itemDescription" type="text" class="form-control">
+  </div>
+  <div class="form-group col-md-4">
+    <label for="priceProduct">Preço do produto</label>
+    <input id="priceProduct" formControlName="priceProduct" type="text" class="form-control">
+  </div>
+  <div class="text-right mt-2 d-flex col-md-4 justify-content-end">
+    <button class="btn btn-primary w-30 " type="submit" [disabled]="requestForm.invalid">Enviar solicitação</button>
+  </div>
+</form>
+</div>
