@@ -5,19 +5,33 @@ import { RequestService } from '../services/request.service';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ToastrNotificationService } from '../services/toastr.service';
 import { CommonModule } from '@angular/common';
+import { CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule } from 'ng2-currency-mask';
+
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: "."
+};
 
 @Component({
   selector: 'app-request',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, NgxMaskDirective, CommonModule],
+  imports: [RouterOutlet, ReactiveFormsModule, NgxMaskDirective, CommonModule, CurrencyMaskModule],
   templateUrl: './request.component.html',
   styleUrl: './request.component.css',
   providers: [
     provideNgxMask(),
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],
 })
 export class RequestComponent {
   requestForm: FormGroup;
+
+
 
   constructor(private formBuilder: FormBuilder,
     private requestService: RequestService,
@@ -25,7 +39,7 @@ export class RequestComponent {
     this.requestForm = this.formBuilder.group({
       requesterName: ['', Validators.required],
       description: ['', Validators.required],
-      price: ['', [Validators.required, Validators.pattern(/^-?\d+(\,\d{1,2})?$/)]],
+      price: ['', [Validators.required]],
     });
   }
 
@@ -44,5 +58,9 @@ export class RequestComponent {
       this.toastrNotification.showError('Ocorreu um erro interno: ', 'Erro');
       console.error('Erro: ', error);
     }
+  }
+
+  onValueChange(value: any, name: any, values: any) {
+    console.log(value, name, values)
   }
 }

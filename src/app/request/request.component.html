@@ -28,12 +28,8 @@
     <div class="form-group col-md-4">
       <label for="price">Preço do produto</label>
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">R$</span>
-        </div>
-        <input id="price" formControlName="price" type="text" class="form-control">
+        <input currencyMask [(ngModel)]="requestForm.controls['price'].value"  id="price" formControlName="price" type="text" class="form-control">
       </div>
-
       <div
         *ngIf="requestForm.get('price')?.invalid && (requestForm.get('price')?.dirty || requestForm.get('price')?.touched)">
         <small style="color: red;" *ngIf="requestForm.get('price')?.errors">
