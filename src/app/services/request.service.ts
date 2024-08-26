@@ -13,14 +13,14 @@ export class RequestService {
   constructor(private http: HttpClient){}
 
   createRequest(request: Request): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/requester`, request);
+    return this.http.post<any>(`${this.apiUrl}/requester/create`, request);
   }
 
   getRequests(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/admin`);
+    return this.http.get<any>(`${this.apiUrl}/admin/get`);
   }
 
   approvalRequest(request: Request): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/approver`, request)
+    return this.http.post<any>(`${this.apiUrl}/approver/update`, request)
   }
 }

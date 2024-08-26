@@ -19,6 +19,7 @@ export class ApprovalComponent implements OnInit {
   approvalForm: FormGroup;
   requests: Request[] = [];
   selectedRequest: any;
+  showInputAction: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -50,6 +51,7 @@ export class ApprovalComponent implements OnInit {
 
   sendRequest() {
     if (this.approvalForm.valid) {
+      this.showInputAction = false;
       this.requestService.approvalRequest(this.approvalForm.value).subscribe(response => {
         if (response) {
           this.approvalForm.reset();
@@ -72,6 +74,7 @@ export class ApprovalComponent implements OnInit {
   }
 
   fillForm(request: any) {
+    this.showInputAction = true;
     this.approvalForm.patchValue({
       id: request.id,
       requesterName: request.requesterName,
