@@ -5,7 +5,7 @@
   </div>
   <ng-template #hasData>
     <form [formGroup]="filterForm" class="mt-4">
-      <div class="row">
+      <div class="form-row">
         <div class="form-group col-md-4">
           <label for="status">Status</label>
           <select id="status" formControlName="status" class="form-control">
@@ -41,7 +41,7 @@
         <tr *ngFor="let request of filteredRequests">
           <td>{{ request.requesterName }}</td>
           <td>{{ request.description }}</td>
-          <td>{{ 'R$ ' + request.price }}</td>
+          <td>{{ 'R$ ' + parseToReal(request.price) }}</td>
           <td>{{ setStatusRequest(request.status) }}</td>
           <td>{{ request.observations ? request.observations : '' }}</td>
         </tr>

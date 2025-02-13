@@ -59,4 +59,9 @@ export class QueryComponent implements OnInit {
     if (!status) return '';
     return status == 0 ? 'Reprovado' : 'Aprovado';
   }
+
+  parseToReal(value: number): string {
+    const valueFormat = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2 }).format(value);
+    return valueFormat; 
+  }
 }

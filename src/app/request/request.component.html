@@ -1,44 +1,50 @@
 <div class="container mt-4">
   <h2>Criar Solicitação</h2>
-  <form [formGroup]="requestForm" (ngSubmit)="sendRequest()" class="mt-4">
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="requesterName">Nome do Solicitante</label>
-        <input id="requesterName" formControlName="requesterName" type="text" class="form-control">
-      </div>
+  <div class="card mb-3">
+    <div class="card-body">
+      <form [formGroup]="requestForm" (ngSubmit)="sendRequest()" class="mt-4">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="requesterName">Nome do Solicitante</label>
+            <input id="requesterName" formControlName="requesterName" type="text" class="form-control">
+          </div>
 
-      <div
-        *ngIf="requestForm.get('requesterName')?.invalid && (requestForm.get('requesterName')?.dirty || requestForm.get('requesterName')?.touched)">
-        <small style="color: red;" *ngIf="requestForm.get('requesterName')?.errors">
-          O campo não pode ser nulo
-        </small>
-      </div>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="description">Descrição do item</label>
-      <input id="description" formControlName="description" type="text" class="form-control">
+          <div
+            *ngIf="requestForm.get('requesterName')?.invalid && (requestForm.get('requesterName')?.dirty || requestForm.get('requesterName')?.touched)">
+            <small style="color: red;" *ngIf="requestForm.get('requesterName')?.errors">
+              O campo não pode ser nulo
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Descrição do item</label>
+          <input id="description" formControlName="description" type="text" class="form-control">
 
-      <div
-        *ngIf="requestForm.get('description')?.invalid && (requestForm.get('description')?.dirty || requestForm.get('description')?.touched)">
-        <small style="color: red;" *ngIf="requestForm.get('description')?.errors">
-          O campo não pode ser nulo
-        </small>
-      </div>
+          <div
+            *ngIf="requestForm.get('description')?.invalid && (requestForm.get('description')?.dirty || requestForm.get('description')?.touched)">
+            <small style="color: red;" *ngIf="requestForm.get('description')?.errors">
+              O campo não pode ser nulo
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="price">Preço do produto</label>
+          <div class="input-group mb-3">
+            <input currencyMask [(ngModel)]="requestForm.controls['price'].value" id="price" formControlName="price"
+              type="text" class="form-control">
+          </div>
+          <div
+            *ngIf="requestForm.get('price')?.invalid && (requestForm.get('price')?.dirty || requestForm.get('price')?.touched)">
+            <small style="color: red;" *ngIf="requestForm.get('price')?.errors">
+              O campo não pode ser nulo
+            </small>
+          </div>
+        </div>
+        <div class="text-right mt-2 d-flex justify-content-end">
+          <button class="btn btn-primary w-30 " type="submit" [disabled]="requestForm.invalid">Enviar
+            solicitação</button>
+        </div>
+      </form>
     </div>
-    <div class="form-group col-md-4">
-      <label for="price">Preço do produto</label>
-      <div class="input-group mb-3">
-        <input currencyMask [(ngModel)]="requestForm.controls['price'].value"  id="price" formControlName="price" type="text" class="form-control">
-      </div>
-      <div
-        *ngIf="requestForm.get('price')?.invalid && (requestForm.get('price')?.dirty || requestForm.get('price')?.touched)">
-        <small style="color: red;" *ngIf="requestForm.get('price')?.errors">
-          O campo deve conter apenas números e uma ou duas casas decimais após a vírgula.
-        </small>
-      </div>
-    </div>
-    <div class="text-right mt-2 d-flex col-md-4 justify-content-end">
-      <button class="btn btn-primary w-30 " type="submit" [disabled]="requestForm.invalid">Enviar solicitação</button>
-    </div>
-  </form>
+  </div>
 </div>
