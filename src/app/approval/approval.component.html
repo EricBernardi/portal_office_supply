@@ -19,10 +19,7 @@
           <div class="form-group">
             <label for="price">Preço do produto</label>
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">R$</span>
-              </div>
-              <input id="price" formControlName="price" type="text" class="form-control" readonly>
+              <input id="price" currencyMask [(ngModel)]="approvalForm.controls['price'].value" formControlName="price" type="text" class="form-control" readonly>
             </div>
           </div>
           <div class="form-group" *ngIf="showInputAction">
@@ -55,7 +52,7 @@
         <tr *ngFor="let request of requests" (click)="fillForm(request)">
           <td>{{ request.requesterName }}</td>
           <td>{{ request.description }}</td>
-          <td>{{ 'R$ ' + request.price }}</td>
+          <td>{{ 'R$ ' + parseToReal(request.price) }}</td>
           <td>{{ request.status }}</td>
           <td>{{ request.observations ? request.observations : '' }}</td>
         </tr>

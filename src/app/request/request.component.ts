@@ -37,7 +37,7 @@ export class RequestComponent {
     private requestService: RequestService,
     private toastrNotification: ToastrNotificationService) {
     this.requestForm = this.formBuilder.group({
-      requesterName: ['', Validators.required],
+      requesterName: [''],
       description: ['', Validators.required],
       price: ['', [Validators.required]],
     });

@@ -79,9 +79,15 @@ export class ApprovalComponent implements OnInit {
       id: request.id,
       requesterName: request.requesterName,
       description: request.description,
-      price: request.price,
+      price: 'R$ ' + this.parseToReal(request.price),
       status: '',
       observations: ''
     });
+  }
+
+  parseToReal(value: string): string {
+    console.log('OI', value)
+    const valueFormat = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2 }).format(Number(value));
+    return valueFormat; 
   }
 }
